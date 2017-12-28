@@ -26,6 +26,7 @@ export default (props) => (
     <button
       className={css.OrderButton}
       disabled={!props.purchasable}
+      onClick={props.orderButtonClicked}
     >Order now</button>
   </div>
 );
