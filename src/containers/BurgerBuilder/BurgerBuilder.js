@@ -19,7 +19,15 @@ export default class BurgerBuilder extends React.Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4
+    totalPrice: 4,
+    purchasable: false
+  }
+
+  _updatePurchaseState (ingredients) {
+    const sum = Object.keys(ingredients)
+      .map(ingredientKey => ingredients[ingredientKey])
+      .reduce((sum, el) => sum + el, 0);
+    this.setState({ purchasable: sum > 0 });
   }
 
   _addIngredientHandler = (type) => {
@@ -31,6 +39,7 @@ export default class BurgerBuilder extends React.Component {
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceAddition;
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
+    this._updatePurchaseState(updatedIngredients);
   }
 
   _removeIngredientHandler = (type) => {
@@ -45,6 +54,7 @@ export default class BurgerBuilder extends React.Component {
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice - priceDeduction;
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
+    this._updatePurchaseState(updatedIngredients);
   }
 
   render() {
@@ -59,6 +69,7 @@ export default class BurgerBuilder extends React.Component {
           ingredientAdded={this._addIngredientHandler}
           ingredientRemoved={this._removeIngredientHandler}
           disabled={disabledInfo}
+          purchasable={this.state.purchasable}
           price={this.state.totalPrice}
         />
       </React.Fragment>
