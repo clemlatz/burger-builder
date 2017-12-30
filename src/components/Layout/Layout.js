@@ -7,7 +7,13 @@ import css from './Layout.css';
 
 export default class Layout extends React.Component {
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
+  }
+
+  _toggleSideDrawer = () => {
+    this.setState((prevState) => {
+      return { showSideDrawer: !prevState.showSideDrawer }
+    });
   }
 
   _closeSideDrawer = () => {
@@ -17,8 +23,10 @@ export default class Layout extends React.Component {
   render() {
     return (
         <React.Fragment>
-          <Toolbar />
-          <SideDrawer open={this.state.showSideDrawer} close={this._closeSideDrawer} />
+          <Toolbar toggleSideDrawer={this._toggleSideDrawer} />
+          <SideDrawer
+            show={this.state.showSideDrawer}
+            close={this._closeSideDrawer} />
           <main className={css.Content}>
             {this.props.children}
           </main>

@@ -8,13 +8,13 @@ import css from './SideDrawer.css';
 
 export default (props) => {
   const classes = [css.SideDrawer];
-  if (props.open) {
+  if (props.show) {
     classes.push(css.Open);
   }
 
   return (
     <React.Fragment>
-      <Backdrop show={props.open} clicked={props.close} />
+      <Backdrop show={props.show} clicked={props.close} />
       <div className={classes.join(' ')}>
         <div className={css.Logo}>
           <Logo />
