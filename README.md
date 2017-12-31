@@ -12,5 +12,9 @@ whose guide can be found [here](https://github.com/facebookincubator/create-reac
 
 ## Build for production
 
-    yarn build
+    yarn run build
+
+## Deploy on Github Pages
+
+    yarn run deploy
 
