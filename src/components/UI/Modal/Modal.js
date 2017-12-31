@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Backdrop from '../Backdrop/Backdrop';
 
@@ -17,5 +18,11 @@ const modal = (props) => (
     </div>
   </React.Fragment>
 );
+
+modal.propTypes = {
+  children: PropTypes.element.isRequired,
+  modalClosed: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired
+};
 
 export default modal;

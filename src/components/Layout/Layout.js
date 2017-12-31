@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
@@ -6,6 +7,10 @@ import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import css from './Layout.css';
 
 export default class Layout extends React.Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired
+  };
+
   state = {
     showSideDrawer: false
   }
