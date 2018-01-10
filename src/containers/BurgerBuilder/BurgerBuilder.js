@@ -19,16 +19,21 @@ const INGREDIENT_PRICES = {
 class BurgerBuilder extends React.Component {
 
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    },
+    ingredients: null,
     totalPrice: 4,
     purchasable: false,
     purchasing: false,
     loading: false,
+    error: false
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get('https://burger-builder-5b652.firebaseio.com/ingredients.json');
+      this.setState({ ingredients: response.data });
+    } catch (error) {
+      this.setState({ error: true });
+    }
   }
 
   _updatePurchaseState (ingredients) {
@@ -100,31 +105,44 @@ class BurgerBuilder extends React.Component {
   }
 
   render() {
+
     const disabledInfo = { ...this.state.ingredients };
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
+
+    let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />;
+    let orderSummary = null;
+    if (this.state.ingredients !== null) {
+      burger = (
+        <React.Fragment>
+          <Burger ingredients={this.state.ingredients} />
+          <BuildControls
+            ingredientAdded={this._addIngredientHandler}
+            ingredientRemoved={this._removeIngredientHandler}
+            disabled={disabledInfo}
+            purchasable={this.state.purchasable}
+            price={this.state.totalPrice}
+            orderButtonClicked={this._purchaseHandler}
+          />
+        </React.Fragment>
+      );
+      orderSummary = (
+        <OrderSummary
+          ingredients={this.state.ingredients}
+          totalPrice={this.state.totalPrice}
+          orderContinueClicked={this._purchaseContinueHandler}
+          orderCancelClicked={this._purchaseCancelHandler}
+        />
+      );
+    }
+
     return (
       <React.Fragment>
 				<Modal show={this.state.purchasing} modalClosed={this._purchaseCancelHandler}>
-          {this.state.loading ? <Spinner/> :
-            <OrderSummary
-              ingredients={this.state.ingredients}
-              totalPrice={this.state.totalPrice}
-              orderContinueClicked={this._purchaseContinueHandler}
-              orderCancelClicked={this._purchaseCancelHandler}
-            />
-          }
+          {this.state.loading ? <Spinner/> : orderSummary}
         </Modal>
-        <Burger ingredients={this.state.ingredients} />
-				<BuildControls
-          ingredientAdded={this._addIngredientHandler}
-          ingredientRemoved={this._removeIngredientHandler}
-          disabled={disabledInfo}
-          purchasable={this.state.purchasable}
-          price={this.state.totalPrice}
-          orderButtonClicked={this._purchaseHandler}
-        />
+        {burger}
       </React.Fragment>
     );
   }
