@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../axios-orders';
+import PropTypes from 'prop-types';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -17,6 +18,9 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends React.Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+  }
 
   state = {
     ingredients: null,
@@ -79,29 +83,32 @@ class BurgerBuilder extends React.Component {
   }
 
   _purchaseContinueHandler = async () => {
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Clément Bourgoin',
-        address: {
-          street: 'Tesststreet 2',
-          zipCode: '46600',
-          country: 'France'
-        },
-        email: 'test@example.org',
-      },
-      deliveryMethod: 'fastest',
-    }
-    try {
-      const response = await axios.post('/orders.json', order);
-      this.setState({ loading: false, purchasing: false });
-      console.log(response);
-    } catch(error) {
-      this.setState({ loading: false, purchasing: false });
-      console.log(error);
-    }
+    //this.setState({ loading: true });
+    //const order = {
+    //  ingredients: this.state.ingredients,
+    //  price: this.state.totalPrice,
+    //  customer: {
+    //    name: 'Clément Bourgoin',
+    //    address: {
+    //      street: 'Tesststreet 2',
+    //      zipCode: '46600',
+    //      country: 'France'
+    //    },
+    //    email: 'test@example.org',
+    //  },
+    //  deliveryMethod: 'fastest',
+    //}
+
+    //try {
+    //  const response = await axios.post('/orders.json', order);
+    //  this.setState({ loading: false, purchasing: false });
+    //  console.log(response);
+    //} catch(error) {
+    //  this.setState({ loading: false, purchasing: false });
+    //  console.log(error);
+    //}
+
+    this.props.history.push('/checkout');
   }
 
   render() {
