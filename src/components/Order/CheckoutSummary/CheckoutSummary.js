@@ -13,14 +13,18 @@ const checkoutSummary = (props) => {
       <div style={{width: '100%', margin: 'auto'}}>
         <Burger ingredients={props.ingredients}/>
       </div>
-      <Button type="Danger" clicked>CANCEL</Button>
-      <Button type="Success" clicked>CONTINUE</Button>
+      <Button type="Danger"
+        clicked={props.checkoutCancelled}>CANCEL</Button>
+      <Button type="Success"
+        clicked={props.checkoutContinued}>CONTINUE</Button>
     </div>
   );
 };
 
 checkoutSummary.propTypes = {
-  ingredients: PropTypes.object.isRequired
+  ingredients: PropTypes.object.isRequired,
+  checkoutCancelled: PropTypes.func.isRequired,
+  checkoutContinued: PropTypes.func.isRequired
 }
 
 export default checkoutSummary;
