@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 
+import ContactData from './ContactData/ContactData';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
 class Checkout extends React.Component {
@@ -33,6 +35,7 @@ class Checkout extends React.Component {
           checkoutCancelled={this.checkoutCancelledHandler}
           checkoutContinued={this.checkoutContinuedHandler}
           ingredients={this.state.ingredients}/>
+        <Route path={this.props.match.path + '/contact-data'} component={ContactData} />
       </div>
     );
   }
@@ -40,7 +43,8 @@ class Checkout extends React.Component {
 
 Checkout.propTypes = {
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 export default Checkout;
