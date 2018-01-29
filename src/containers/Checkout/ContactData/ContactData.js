@@ -12,6 +12,7 @@ class ContactData extends React.Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     ingredients: PropTypes.object.isRequired,
+    price: PropTypes.number.isRequired,
   }
 
   state = {
@@ -29,8 +30,8 @@ class ContactData extends React.Component {
 
     this.setState({ loading: true });
     const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
+      ingredients: this.props.ingredients,
+      price: this.props.price,
       customer: {
         name: 'Clément Bourgoin',
         address: {
