@@ -46,7 +46,7 @@ class Checkout extends React.Component {
           component={(props) => (<ContactData
             {...props}
             ingredients={this.state.ingredients}
-            price={this.state.totalPrice} />)}
+            price={+this.state.totalPrice} />)}
         />
       </div>
     );
