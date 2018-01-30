@@ -24,6 +24,7 @@ class ContactData extends React.Component {
           type: 'text',
           placeholder: 'Your Name',
         },
+        value: '',
       },
       street: {
         elementType: 'input',
@@ -31,6 +32,7 @@ class ContactData extends React.Component {
           type: 'text',
           placeholder: 'Street',
         },
+        value: '',
       },
       zipCode: {
         elementType: 'input',
@@ -38,6 +40,7 @@ class ContactData extends React.Component {
           type: 'text',
           placeholder: 'Zip Code',
         },
+        value: '',
       },
       country: {
         elementType: 'input',
@@ -45,6 +48,7 @@ class ContactData extends React.Component {
           type: 'text',
           placeholder: 'Country',
         },
+        value: '',
       },
       email: {
         elementType: 'input',
@@ -52,6 +56,7 @@ class ContactData extends React.Component {
           type: 'text',
           placeholder: 'Your E-mail',
         },
+        value: '',
       },
       deliveryMethod: {
         elementType: 'select',
@@ -61,6 +66,7 @@ class ContactData extends React.Component {
             { value: 'cheapest', displayValue: 'Cheapest' },
           ]
         },
+        value: '',
       }
     },
     loading: false,
@@ -83,6 +89,18 @@ class ContactData extends React.Component {
       this.setState({ loading: false });
     }
 
+  }
+
+  _inputChangedHandler = (event, inputId) => {
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputId]
+    };
+    updatedFormElement.value = event.target.value;
+    updatedOrderForm[inputId] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm });
   }
 
   render () {
@@ -108,6 +126,7 @@ class ContactData extends React.Component {
               elementType={formElement.config.elementType}
               elementConfig={formElement.config.elementConfig}
               value={formElement.config.value}
+              changed={(event) => this._inputChangedHandler(event, formElement.id)}
             />
           ))}
           <Button type="Success" clicked={this._orderHandler}>ORDER</Button>
