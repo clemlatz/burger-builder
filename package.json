@@ -2,7 +2,7 @@
   "name": "burger-builder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://iwazaru.github.io/burger-builder",
+  "homepage": "https://clements-burgers.netlify.com",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "axios": "^0.17.1",
